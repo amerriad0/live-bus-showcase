@@ -1,195 +1,160 @@
 # Live Bus — System Architecture
 
-This document describes the high-level architecture of **Live Bus**, a multi-tenant school transportation SaaS platform. It is intended for technical reviewers, partners, and stakeholders evaluating the product design.
+High-level architecture for **Live Bus**, a multi-tenant school and kindergarten management SaaS with real-time transportation.
 
-> **Note:** This repository is a public product showcase. Implementation source code is not included.
+> Public showcase documentation only. Source code, credentials, and internal deployment details are not included.
 
 ---
 
 ## 1. System Overview
 
-Live Bus connects three primary audiences through a shared platform:
+Live Bus connects three client experiences to shared platform services:
 
-| Role | Client | Primary responsibilities |
-|------|--------|---------------------------|
-| **Parents** | Flutter mobile app | Track buses in real time, receive arrival estimates and alerts |
-| **Drivers** | Flutter mobile app | Run trips, publish GPS location, monitor assigned routes |
-| **Admins** | Web dashboard | Manage students, drivers, buses, organizations, finance, and reports |
-
-Core capabilities:
-
-- Real-time GPS tracking via Firebase Realtime Database
-- Business logic and persistence via a Laravel REST API and MySQL
-- Multi-tenant SaaS tenancy with organization accounts and role-based access
-- Subscription-oriented organization onboarding
+| Role | Client | Responsibilities |
+|------|--------|------------------|
+| **Parents** | Mobile app | Track buses, receive alerts, view attendance and finance |
+| **Drivers** | Mobile app | Run trips, share live location, manage onboard students |
+| **Admins** | Admin app / dashboard | Manage students, transport, attendance, finance, and organization settings |
 
 ```
-┌─────────────────┐         ┌─────────────────┐         ┌─────────────────┐
-│  Parent App     │         │  Driver App     │         │ Admin Dashboard │
-│  (Flutter)      │         │  (Flutter)      │         │  (Web)          │
-└────────┬────────┘         └────────┬────────┘         └────────┬────────┘
-         │                           │                           │
-         │    Live GPS / ETA         │    Location stream        │  REST
-         │◄──────────────────────────┼───────────────────────────┤
-         │                           │                           │
-         ▼                           ▼                           ▼
-┌──────────────────────────────────────────┐      ┌──────────────────────────┐
-│     Firebase Realtime Database           │      │      Laravel API          │
-│     (live location & trip state)         │      │      (business logic)     │
-└──────────────────────────────────────────┘      └────────────┬─────────────┘
-                                                               │
-                                                               ▼
-                                                      ┌────────────────┐
-                                                      │ MySQL Database │
-                                                      └────────────────┘
+┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+│  Parent App  │   │  Driver App  │   │  Admin App   │
+└──────┬───────┘   └──────┬───────┘   └──────┬───────┘
+       │                  │                  │
+       │     Live GPS     │     REST APIs    │
+       ▼                  ▼                  ▼
+┌──────────────────┐              ┌──────────────────┐
+│ Firebase Realtime│              │  Laravel Backend │
+│ Live tracking    │              │  Business logic  │
+└──────────────────┘              └────────┬─────────┘
+                                           │
+                                           ▼
+                                  ┌──────────────────┐
+                                  │      MySQL       │
+                                  │   Primary data   │
+                                  └──────────────────┘
 ```
 
 ---
 
 ## 2. Application Layers
 
-### 2.1 Presentation Layer
+### Presentation
 
-- **Parent & Driver apps** — Flutter / Dart clients for iOS and Android
-- **Admin dashboard** — Web interface for school and organization operators
+- Flutter mobile clients for parents and drivers
+- Admin application for school and platform operators
 
-### 2.2 Application / API Layer
+### Application services
 
-- **Laravel REST API** — Authentication, CRUD operations, subscriptions, reporting, and administrative workflows
-- Stateless HTTP endpoints consumed by mobile and web clients
+- Laravel-based backend exposing REST APIs
+- Authentication, authorization, and domain workflows
 
-### 2.3 Real-time Layer
+### Real-time services
 
-- **Firebase Realtime Database** — Low-latency channel for live bus coordinates, trip status, and parent-facing location updates
+- Firebase Realtime Database for live trip location
+- Firebase Cloud Messaging for push notifications
 
-### 2.4 Data Layer
+### Data
 
-- **MySQL** — Durable storage for users, organizations, students, drivers, buses, routes, subscriptions, finance records, and audit-friendly operational data
-- Indexed queries and SQL optimization for reporting and multi-tenant filters
+- MySQL for durable multi-tenant business data
 
-### 2.5 Infrastructure & Delivery
+### Maps & location
 
-- **Docker** — Consistent deployment environments
-- **GitHub Actions** — CI/CD pipelines
-- **Linux** — Production hosting target
+- HERE Maps and routing services for map experiences
 
 ---
 
 ## 3. Data Flow
 
-### Operational (admin & domain data)
+**Operational data** (students, fees, attendance, organization settings) flows through the Laravel API into MySQL.
 
-1. Admin authenticates and selects an organization context.
-2. Dashboard calls the Laravel API over HTTPS.
-3. API enforces roles and tenant boundaries, then reads/writes MySQL.
-4. Responses update the dashboard UI (students, fleets, finance, reports).
-
-### Real-time (location)
-
-1. Driver app obtains GPS fixes (including background updates when permitted).
-2. Location payloads are published to Firebase Realtime Database for the active trip.
-3. Parent app listens to the relevant trip/bus node and renders the live map, ETA, and status.
-4. Trip metadata and historical records remain coordinated through the Laravel API / MySQL where persistence is required.
+**Live location** flows from the driver app into Firebase, then to parent and admin clients listening for updates.
 
 ```
-Driver App ──(GPS)──► Firebase RTDB ──(listen)──► Parent App
-                │
-                └── (trip / domain sync) ──► Laravel API ──► MySQL
+Driver App ──GPS──► Firebase Realtime ──listen──► Parent / Admin Apps
+     │
+     └── trip & domain sync ──► Laravel API ──► MySQL
 ```
 
 ---
 
-## 4. Authentication Flow
+## 4. Authentication & Roles
 
-1. User signs in from the Parent app, Driver app, or Admin dashboard.
-2. Credentials are validated by the Laravel API.
-3. On success, the API issues a session or token used for subsequent REST calls.
-4. Role and organization claims determine accessible resources:
-   - **Parent** — children, assigned buses/trips, notifications
-   - **Driver** — assigned trips, route monitoring, location publishing rights
-   - **Admin / org roles** — tenant-scoped management modules
-5. Real-time listeners are scoped to trips/buses the authenticated user is allowed to observe.
+Users sign in through the platform API. Access is scoped by role and organization:
 
-Unauthorized cross-tenant access is rejected at the API layer.
+- **Super Admin** — organizations, subscriptions, platform operations
+- **School Admin** — students, parents, classes, attendance, finance, transport
+- **Driver** — trips, GPS publishing, student attendance on trip
+- **Parent** — children, tracking, notifications, attendance, finance visibility
+
+Cross-organization access is blocked by tenant boundaries.
 
 ---
 
-## 5. Real-time GPS Tracking Flow
+## 5. Real-Time GPS Tracking
 
 ```
-Driver Mobile App
-        │
-        │  continuous / background location updates
-        ▼
-Firebase Realtime Database
-        │
-        │  live location stream
-        ▼
-Parent Mobile App
+Driver Application
+        ↓
+Real-Time Location System (Firebase)
+        ↓
+Parent & Admin Applications
 ```
 
-**Step-by-step:**
+1. Driver starts an active trip  
+2. Location updates are published continuously  
+3. Parents and admins see live map updates  
+4. Notifications support arrival and trip events  
 
-1. Driver starts or resumes an active trip in the Driver app.
-2. The app streams GPS coordinates (and related trip state) to Firebase.
-3. Parents subscribed to that trip receive live map updates and ETA-oriented signals.
-4. Notifications can be triggered when arrival thresholds or trip events occur.
-5. When the trip ends, publishing stops and final state is reflected for parents and admins.
-
-This split keeps **hot path location traffic** on Firebase while **authoritative business data** stays in Laravel + MySQL.
+Hot-path location stays on the real-time channel; authoritative business records remain in the API + database.
 
 ---
 
-## 6. SaaS Multi-Tenant Design
+## 6. Multi-Tenant SaaS Design
 
-Live Bus is designed as a **multi-tenant SaaS**:
+Each organization (school / kindergarten) is an isolated tenant with its own:
 
-- Each **organization** (e.g., school or transport operator) is an isolated tenant.
-- Users, students, drivers, buses, routes, finance records, and reports are scoped to an organization.
-- **Subscription management** controls plan limits and feature access per organization.
-- **Role-based access control (RBAC)** restricts modules and actions within a tenant.
-- API queries and writes always include tenant context to prevent data leakage between organizations.
+- Users and roles
+- Students and parents
+- Buses and routes
+- Finance records
+- Settings and announcements
 
-### Tenant model (conceptual)
+The platform also supports subscription plans and organization account management.
 
 ```
 Platform
  └── Organization (tenant)
-      ├── Subscription / plan
+      ├── Subscription
       ├── Users & roles
-      ├── Students
-      ├── Drivers
-      ├── Buses & routes
+      ├── Students & classes
+      ├── Drivers & buses
       ├── Finance
       └── Reports
 ```
 
 ---
 
-## 7. Component Relationship Summary
+## 7. Technology Summary
 
-| Concern | Technology |
-|---------|------------|
-| Mobile clients | Flutter, Dart |
-| Admin UI | Web dashboard → Laravel API |
-| Business API | Laravel, PHP, REST |
-| Persistent data | MySQL |
-| Live GPS | Firebase Realtime Database |
-| Automation & ops | GitHub Actions, Docker, Linux |
+| Area | Stack |
+|------|--------|
+| Mobile | Flutter, Dart |
+| Backend | Laravel, PHP, REST APIs |
+| Database | MySQL |
+| Real-time | Firebase Realtime Database, FCM |
+| Maps | HERE Maps |
+| Delivery | GitHub Actions, Docker, Linux |
 
 ---
 
-## 8. Security & Showcase Scope
+## 8. Showcase Scope
 
-Public materials in this repository intentionally omit:
+This repository intentionally excludes:
 
 - Application source code
 - Environment files and secrets
 - API keys and Firebase credentials
 - Database dumps and customer data
 
-For a live demonstration, visit **[https://livebus.site](https://livebus.site)**.
-
----
-
-*Live Bus — school transportation, managed in real time.*
+Demo: [https://livebus.site](https://livebus.site)

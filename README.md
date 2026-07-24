@@ -1,4 +1,12 @@
+<div align="center">
+
+<img src="assets/logo.png" alt="Live Bus" width="96" />
+
 # 🚍 Live Bus
+
+**Complete School & Kindergarten Management Platform**
+
+Real-time school transportation SaaS connecting schools, drivers, and parents — with administration, attendance, and finance in one system.
 
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
@@ -6,37 +14,23 @@
 [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
 [![SaaS](https://img.shields.io/badge/SaaS-Multi--Tenant-0A66C2?style=for-the-badge)](#-architecture)
 
-## 🚀 Complete School & Kindergarten Management Platform
+[Website](https://livebus.site) · [Product Overview](docs/PRODUCT_OVERVIEW.md) · [Architecture](docs/SYSTEM_ARCHITECTURE.md)
 
-**Live Bus** is a modern SaaS platform designed to help schools and kindergartens manage their daily operations from one connected system.
+<img src="assets/banner.png" alt="Live Bus product banner" width="360" />
 
-It combines:
-
-- Student management
-- Attendance tracking
-- Financial management
-- Parent communication
-- Bus management
-- Real-time transportation tracking
-
-> **Not just bus tracking — a complete operating system for schools and kindergartens.**
-
-🌐 **Website:** [https://livebus.site](https://livebus.site)
+</div>
 
 ---
 
-# 📌 Overview
+## Overview
 
-Schools usually manage transportation, attendance, finance, and communication using multiple disconnected tools.
+Schools often manage transportation, attendance, finance, and communication with disconnected tools.
 
-Live Bus brings everything together into one platform connecting:
+**Live Bus** brings everything together into one platform for:
 
-🏫 School Administration  
-🚌 Drivers  
-👨‍👩‍👧 Parents  
-🎓 Students  
+🏫 School Administration · 🚌 Drivers · 👨‍👩‍👧 Parents · 🎓 Students
 
-The platform provides a complete workflow from student registration to safe transportation arrival.
+> **Not just bus tracking — a complete operating system for schools and kindergartens.**
 
 ---
 
@@ -56,307 +50,178 @@ All within one scalable platform.
 
 ---
 
-# ✨ Main Features
+## Features
 
-## 🏫 School Administration
+### School Administration
 
-Complete management dashboard including:
-
-- Student management
-- Parent accounts
-- Classes management
-- Attendance monitoring
-- Bus management
-- Driver management
+- Student & parent management
+- Classes and attendance
+- Bus & driver management
 - Announcements
 - Financial operations
 - Reports and insights
 
----
+### Student Management
 
-## 🎓 Student Management
-
-Manage the complete student lifecycle:
-
-- Student profiles
-- Parent linking
-- Class assignment
-- Bus assignment
+- Student profiles and parent linking
+- Class and bus assignment
 - QR student cards
 - Attendance history
 - Financial records
 
----
-
-## 🚌 Smart Transportation System
-
-Live Bus provides intelligent school transportation management:
+### Smart Transportation
 
 - Real-time bus tracking
 - Live trip monitoring
-- Driver management
-- Bus assignments
-- Student transportation subscriptions
-- Route management
+- Route awareness
+- Transportation subscriptions
 - Parent notifications
 
----
-
-## 📍 Real-Time GPS Tracking
-
-Parents and administrators can monitor active trips through real-time location updates.
-
-**Flow:**
-
-```
-Driver Application
-        ↓
-Real-Time Location System
-        ↓
-Parent & Admin Applications
-```
-
-**Benefits:**
-
-- Live bus visibility
-- Better safety
-- Reduced waiting time
-- Improved communication
-
----
-
-## 👨‍👩‍👧 Parent Application
-
-Parents can:
+### Parent Application
 
 - View children
 - Track buses live
-- Receive notifications
-- Check attendance
-- View announcements
-- Follow financial information
-- Manage home location
+- Notifications & announcements
+- Attendance visibility
+- Financial information
+- Home location management
 
----
-
-## 🧑‍✈️ Driver Application
-
-Drivers can:
+### Driver Application
 
 - Start and manage trips
 - Share live location
 - View assigned students
 - Record attendance
 - Scan student QR codes
-- View required trip information
 
----
+### Finance
 
-# 💰 Finance Management
-
-A complete school finance system:
-
-**Features:**
-
-- Fees management
-- Student invoices
-- Payments tracking
-- Receipts
-- Discounts
+- Fees, invoices, and payments
+- Receipts and discounts
 - Transportation subscriptions
 - Financial summaries
 
 ---
 
-# 🏢 SaaS Architecture
+## Tech Stack
 
-Live Bus is built as a multi-tenant SaaS platform.
-
-Each organization has:
-
-- Independent data
-- Own users
-- Own students
-- Own buses
-- Own financial records
-- Own settings
-
-The platform supports:
-
-- Organizations
-- Subscription plans
-- Account management
-- SaaS operations
+| Layer | Technologies |
+|-------|----------------|
+| **Mobile** | Flutter, Dart |
+| **Backend** | Laravel, PHP, REST APIs |
+| **Database** | MySQL |
+| **Real-time** | Firebase Realtime Database, FCM |
+| **Maps** | HERE Maps |
+| **Tools** | GitHub Actions, Docker, Linux |
 
 ---
 
-# 🛠 Technology Stack
-
-## 📱 Mobile Development
-
-- Flutter
-- Dart
-
-## ⚙️ Backend Development
-
-- Laravel
-- PHP
-- REST APIs
-
-## 🗄 Database
-
-- MySQL
-- SQL Database Design
-
-## 🔥 Real-Time & Cloud
-
-- Firebase Realtime Database
-- Firebase Cloud Messaging
-
-## 🗺 Maps & Location
-
-- HERE Maps
-- Routing Services
-
-## 🔧 Tools
-
-- Git
-- GitHub Actions
-- Docker
-- Linux
-
----
-
-# 🏗 Architecture
+## Architecture
 
 ```
              Flutter Applications
-
-    Parent App | Driver App | Admin App
-
-                     |
+      Parent App | Driver App | Admin App
                      |
                Laravel Backend
-
-    Authentication - Business Logic - APIs
-
+         Auth · Business Logic · APIs
                      |
-          -------------------------
+          ------------+------------
           |                       |
        MySQL              Firebase Realtime
-    Main Data              Live Tracking
+    Primary data           Live tracking
 ```
 
-For a deeper technical breakdown, see **[docs/SYSTEM_ARCHITECTURE.md](docs/SYSTEM_ARCHITECTURE.md)**.
+Live GPS updates flow from drivers through Firebase to parents and admins. Organizational data is managed through the Laravel API and MySQL.
+
+📖 Full details: **[docs/SYSTEM_ARCHITECTURE.md](docs/SYSTEM_ARCHITECTURE.md)**
 
 ---
 
-# 👥 User Roles
+## Screenshots
 
-## Super Admin
-
-Platform management:
-
-- Manage organizations
-- Manage subscriptions
-- Monitor SaaS operations
-
-## School Admin
-
-Organization management:
-
-- Students
-- Parents
-- Classes
-- Attendance
-- Finance
-- Transportation
-
-## Driver
-
-Transportation operations:
-
-- Trips
-- GPS tracking
-- Student attendance
-
-## Parent
-
-Family experience:
-
-- Child tracking
-- Notifications
-- Attendance
-- Financial information
-
----
-
-# 📸 Screenshots
-
-## Parent App
+### Parent App
 
 <p align="center">
-  <img src="screenshots/parent/home.png" alt="Parent App" width="260" />
+  <img src="screenshots/parent/home.png" alt="Parent home" width="240" />
+  &nbsp;
+  <img src="screenshots/parent/tracking.png" alt="Live tracking" width="240" />
+</p>
+
+### Driver App
+
+<p align="center">
+  <img src="screenshots/driver/dashboard.png" alt="Driver dashboard" width="240" />
+</p>
+
+### Admin Dashboard
+
+<p align="center">
+  <img src="screenshots/admin/dashboard.png" alt="Admin dashboard" width="240" />
+  &nbsp;
+  <img src="screenshots/admin/students.png" alt="Students" width="240" />
+</p>
+
+<p align="center">
+  <img src="screenshots/admin/attendance.png" alt="Attendance" width="240" />
+  &nbsp;
+  <img src="screenshots/admin/finance.png" alt="Finance" width="240" />
 </p>
 
 ---
 
-## Driver App
+## Demo
 
-<p align="center">
-  <img src="screenshots/driver/home.png" alt="Driver App" width="260" />
-</p>
+🌐 **Website:** [https://livebus.site](https://livebus.site)
 
 ---
 
-## Admin Dashboard
+## Documentation
 
-<p align="center">
-  <img src="screenshots/admin/dashboard.png" alt="Admin Dashboard" width="260" />
-</p>
-
----
-
-# 🚀 Project Highlights
-
-✅ Complete SaaS Architecture  
-✅ Real-Time GPS Tracking  
-✅ Multi-Role Applications  
-✅ School Management System  
-✅ Finance Module  
-✅ Attendance System  
-✅ Push Notifications  
-✅ Mobile + Web Experience  
-✅ Scalable Backend Architecture  
+| Document | Description |
+|----------|-------------|
+| [Product Overview](docs/PRODUCT_OVERVIEW.md) | Problem, solution, audiences, and product areas |
+| [System Architecture](docs/SYSTEM_ARCHITECTURE.md) | High-level architecture, roles, GPS flow, multi-tenant design |
 
 ---
 
-# 🔮 Roadmap
+## Project Highlights
 
-Future improvements:
+✅ Multi-tenant SaaS architecture  
+✅ Real-time GPS tracking  
+✅ Multi-role mobile apps  
+✅ School management system  
+✅ Finance & attendance modules  
+✅ Push notifications  
+✅ Scalable backend design  
+
+---
+
+## Roadmap
 
 - Advanced analytics
-- AI route optimization
-- More automation
+- AI-assisted route optimization
+- Deeper automation
 - Smart transportation insights
-- Additional school management features
+- Expanded school management modules
 
 ---
 
-## 👨‍💻 Author
+## About This Repository
 
-**Amer Riad**
+This is a **public product showcase**. It contains documentation, architecture notes, and product screenshots only.
 
+It does **not** include application source code, environment files, API keys, credentials, database dumps, or customer data.
+
+---
+
+## Author
+
+**Amer Riad**  
 Full Stack Developer
 
-🌐 **Website**  
-[https://livebus.site](https://livebus.site)
-
-💼 **LinkedIn**  
-[https://linkedin.com/in/amer-riad-73a67b277](https://linkedin.com/in/amer-riad-73a67b277)
-
-📸 **Instagram**  
-[https://instagram.com/amer._.riad0](https://instagram.com/amer._.riad0)
+🌐 [livebus.site](https://livebus.site)  
+💼 [LinkedIn](https://linkedin.com/in/amer-riad-73a67b277)  
+📸 [Instagram](https://instagram.com/amer._.riad0)
 
 ---
 
