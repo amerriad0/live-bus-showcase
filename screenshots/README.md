@@ -1,11 +1,11 @@
 # Screenshots
 
-Add product images under each folder:
+Product screenshots used in the README:
 
-| Folder | README reference |
-|--------|------------------|
-| `parent-app/` | `screenshots/parent-app/image.png` |
-| `driver-app/` | `screenshots/driver-app/image.png` |
-| `admin-dashboard/` | `screenshots/admin-dashboard/image.png` |
+| App | File |
+|-----|------|
+| Parent | `parent/home.png` |
+| Driver | `driver/home.png` |
+| Admin | `admin/dashboard.png` |
 
-Use clear, cropped captures suitable for recruiters and customers. Avoid personal or student-identifiable data.
+Additional captures may be added under each folder. Avoid personal or student-identifiable production data.
