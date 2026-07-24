@@ -224,5 +224,7 @@ Full Stack Developer
 📸 [Instagram](https://instagram.com/amer._.riad0)
 
 ---
+  <a href="https://instagram.com/livebus.app"><img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram" /></a>
+
 
 ⭐ If you enjoyed this project, consider giving it a star.
