@@ -2,7 +2,7 @@
 
 <img src="assets/logo.png" alt="Live Bus" width="96" />
 
-# 🚍 Live Bus
+#  Live Bus
 
 **Complete School & Kindergarten Management Platform**
 
