@@ -1,0 +1,61 @@
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment & secrets (never commit)
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+serviceAccount*.json
+google-services.json
+GoogleService-Info.plist
+firebase*.json
+
+# Source code (this is a showcase-only repository)
+src/
+app/
+lib/
+android/
+ios/
+backend/
+api/
+*.dart
+*.php
+composer.json
+composer.lock
+pubspec.yaml
+pubspec.lock
+
+# Database
+*.sql
+*.dump
+*.sqlite
+*.db
+
+# Dependencies & build
+node_modules/
+vendor/
+build/
+dist/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary
+tmp/
+temp/
+*.tmp
