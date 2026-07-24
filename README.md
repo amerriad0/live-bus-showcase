@@ -295,19 +295,25 @@ Family experience:
 
 ## Parent App
 
-![Parent](screenshots/parent/home.png)
+<p align="center">
+  <img src="screenshots/parent/home.png" alt="Parent App" width="260" />
+</p>
 
 ---
 
 ## Driver App
 
-![Driver](screenshots/driver/home.png)
+<p align="center">
+  <img src="screenshots/driver/home.png" alt="Driver App" width="260" />
+</p>
 
 ---
 
 ## Admin Dashboard
 
-![Dashboard](screenshots/admin/dashboard.png)
+<p align="center">
+  <img src="screenshots/admin/dashboard.png" alt="Admin Dashboard" width="260" />
+</p>
 
 ---
 
