@@ -14,7 +14,7 @@ Real-time school transportation SaaS connecting schools, drivers, and parents �
 [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
 [![SaaS](https://img.shields.io/badge/SaaS-Multi--Tenant-0A66C2?style=for-the-badge)](#-architecture)
 
-[Website](https://livebus.site) · [Product Overview](docs/PRODUCT_OVERVIEW.md) · [Architecture](docs/SYSTEM_ARCHITECTURE.md)
+[Website](https://eduone.site) · [Product Overview](docs/PRODUCT_OVERVIEW.md) · [Architecture](docs/SYSTEM_ARCHITECTURE.md)
 
 <img src="assets/banner.png" alt="Live Bus product banner" width="360" />
 
@@ -171,7 +171,7 @@ Live GPS updates flow from drivers through Firebase to parents and admins. Organ
 
 ## Demo
 
-🌐 **Website:** [https://livebus.site](https://livebus.site)
+🌐 **Website:** [https://eduone.site/](https://eduone.site/)
 
 ---
 
@@ -219,7 +219,7 @@ It does **not** include application source code, environment files, API keys, cr
 **Amer Riad**  
 Full Stack Developer
 
-🌐 [livebus.site](https://livebus.site)  
+🌐 [livebus.site](https://eduone.site/)  
 💼 [LinkedIn](https://linkedin.com/in/amer-riad-73a67b277)  
 📸 [Instagram](https://instagram.com/amer._.riad0)
 
